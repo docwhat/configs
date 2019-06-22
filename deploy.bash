@@ -21,11 +21,15 @@ while (($# > 0)); do
     die "Unknown flag: $1"
     ;;
   *)
-    configurations="$(basename "$1" .yaml).yaml"
-    if [[ -f $configurations ]]; then
-      configurations=("${configurations[@]}" $configurations)
+    config="$(basename "$1" .yaml).yaml"
+    if [[ -f $config ]]; then
+      if (("${#configurations[@]}" == 0)); then
+        configurations=("$config")
+      else
+        configurations=("${configurations[@]}" "$config")
+      fi
     else
-      die "Unknown config: $configurations (derived from from $1)."
+      die "Unknown config: $config (derived from from $1)."
     fi
     ;;
   esac
@@ -63,11 +67,11 @@ if ((dry_run)); then
 fi
 
 # Deploy that sucker
-for configurations in ${configurations[@]}; do
-  stack_name="$(basename "$configurations" .yaml)"
+for config in ${configurations[@]}; do
+  stack_name="$(basename "$config" .yaml)"
 
   echo "=> deploying ${stack_name}..."
-  docker stack deploy --with-registry-auth --prune -c "$configurations" "$stack_name"
+  docker stack deploy --with-registry-auth --prune -c "$config" "$stack_name"
 done
 
 # EOF

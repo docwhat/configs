@@ -10,9 +10,13 @@ function die() {
 }
 
 declare -a configurationss=()
+declare dry_run=0
 
 while (($# > 0)); do
   case "$1" in
+  -n | --dry-run )
+    dry_run=1
+    ;;
   -*)
     die "Unknown flag: $1"
     ;;
@@ -32,6 +36,7 @@ if (("${#configurationss[@]}" == 0)); then
   configurationss=(*.yaml)
 fi
 declare -ar configurationss
+declare -r dry_run
 
 # Gather checksums as variables
 for path in secrets/*; do
@@ -45,12 +50,17 @@ for path in secrets/*; do
 done
 
 # Verify the configs work
-for configurations in ${configurationss[@]}; do
-  stack_name="$(basename "$configurations" .yaml)"
+for config in ${configurationss[@]}; do
+  stack_name="$(basename "$config" .yaml)"
 
-  echo "=> checking ${stack_name}..."
-  chronic docker-compose -f "$configurations" config
+  echo "=> checking ${config}..."
+  docker-compose -f "$config" config --quiet 2>&1 | (grep -Ev "'(deploy|configs)'" || :)
 done
+
+if (( dry_run )); then
+  echo "DRY_RUN: skipping deploy"
+  exit 0
+fi
 
 # Deploy that sucker
 for configurations in ${configurationss[@]}; do

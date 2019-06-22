@@ -1,0 +1,84 @@
+version: "3.7"
+
+services:
+  app:
+    image: "swarmpit/swarmpit"
+    environment:
+      - "SWARMPIT_DB=http://db:5984"
+    volumes:
+      - "/var/run/docker.sock:/var/run/docker.sock:ro"
+    networks:
+      - "traefik-public"
+      - "net"
+    deploy:
+      labels:
+      - "com.ouroboros.enable=true"
+      - "traefik.enable=true"
+      - "traefik.tags=traefik-public"
+      - "traefik.docker.network=traefik-public"
+      - "traefik.frontend.rule=Host:docwhat.org;PathPrefixStrip:/swarmpit/"
+      - "traefik.port=8080"
+      - "traefik.backend=swarmpit"
+      resources:
+        limits:
+          cpus: "0.50"
+          memory: "1024M"
+        reservations:
+          cpus: "0.25"
+          memory: "512M"
+      placement:
+        constraints:
+          - "node.role == manager"
+
+  db:
+    image: "couchdb:2.3"
+    volumes:
+      - "data:/opt/couchdb/data"
+    networks:
+      - "net"
+    deploy:
+      labels:
+      - "com.ouroboros.enable=true"
+      - "traefik.enable=false"
+      placement:
+        constraints:
+        - "node.labels.swarmpit.swarmpit-data == true"
+      resources:
+        limits:
+          cpus: "0.30"
+          memory: "512M"
+        reservations:
+          cpus: "0.15"
+          memory: "256M"
+
+  agent:
+    image: "swarmpit/agent"
+    environment:
+      - "DOCKER_API_VERSION=1.39"
+    volumes:
+      - "/var/run/docker.sock:/var/run/docker.sock:ro"
+    networks:
+      - "net"
+    deploy:
+      labels:
+      - "com.ouroboros.enable=true"
+      - "traefik.enable=false"
+      mode: "global"
+      labels:
+        swarmpit.agent: "true"
+      resources:
+        limits:
+          cpus: "0.10"
+          memory: "64M"
+        reservations:
+          cpus: "0.05"
+          memory: "32M"
+
+networks:
+  net:
+    attachable: true
+  traefik-public:
+    external: true
+
+volumes:
+  data:

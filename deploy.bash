@@ -9,12 +9,12 @@ function die() {
   exit 10
 }
 
-declare -a configurationss=()
+declare -a configurations=()
 declare dry_run=0
 
 while (($# > 0)); do
   case "$1" in
-  -n | --dry-run )
+  -n | --dry-run)
     dry_run=1
     ;;
   -*)
@@ -23,7 +23,7 @@ while (($# > 0)); do
   *)
     configurations="$(basename "$1" .yaml).yaml"
     if [[ -f $configurations ]]; then
-      configurationss=("${configurationss[@]}" $configurations)
+      configurations=("${configurations[@]}" $configurations)
     else
       die "Unknown config: $configurations (derived from from $1)."
     fi
@@ -32,10 +32,10 @@ while (($# > 0)); do
   shift
 done
 
-if (("${#configurationss[@]}" == 0)); then
-  configurationss=(*.yaml)
+if (("${#configurations[@]}" == 0)); then
+  configurations=(*.yaml)
 fi
-declare -ar configurationss
+declare -ar configurations
 declare -r dry_run
 
 # Gather checksums as variables
@@ -50,20 +50,20 @@ for path in secrets/*; do
 done
 
 # Verify the configs work
-for config in ${configurationss[@]}; do
+for config in ${configurations[@]}; do
   stack_name="$(basename "$config" .yaml)"
 
   echo "=> checking ${config}..."
   docker-compose -f "$config" config --quiet 2>&1 | (grep -Ev "'(deploy|configs)'" || :)
 done
 
-if (( dry_run )); then
+if ((dry_run)); then
   echo "DRY_RUN: skipping deploy"
   exit 0
 fi
 
 # Deploy that sucker
-for configurations in ${configurationss[@]}; do
+for configurations in ${configurations[@]}; do
   stack_name="$(basename "$configurations" .yaml)"
 
   echo "=> deploying ${stack_name}..."

@@ -98,3 +98,4 @@ configs:
 secrets:
   htpasswd:
     file: "secrets/htpasswd"
+    name: "traefik_htpasswd_${HTPASSWD_SUM}"

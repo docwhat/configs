@@ -1,0 +1,38 @@
+version: '3.7'
+
+services:
+  updater:
+    image: pyouroboros/ouroboros
+    read_only: true
+    environment:
+      - "CLEANUP=true"
+      - "INTERVAL=300"
+      - "LABELS_ONLY=true"
+      - "LABEL_ENABLE=true"
+      - "LOG_LEVEL=debug"
+      - "NOTIFIERS=${APPRISE_PUSHOVER_CARBONX_VALUE}"
+      - "SELF_UPDATE=true"
+      - "SWARM=true"
+      - "TZ=America/New_York"
+
+      # - "DATA_EXPORT=prometheus"
+      # - "PROMETHEUS_ADDR=0.0.0.0"
+      # - "PROMETHEUS_PORT=8000"
+    healthcheck:
+      interval: 30s
+      retries: 5
+      test:
+      - CMD
+      - pgrep
+      - ouroboros
+      timeout: 10s
+    volumes:
+      - "/var/run/docker.sock:/var/run/docker.sock:rw"
+      - "/root/.docker/config.json:/root/.docker/config.json:ro"
+    deploy:
+      labels:
+        - "com.ouroboros.enable=true"
+        - "traefik.enable=false"
+      restart_policy:
+        condition: "on-failure"
+        delay: "10s"

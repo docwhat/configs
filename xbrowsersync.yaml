@@ -1,0 +1,83 @@
+version: '3.7'
+
+services:
+  db:
+    image: "mongo:4.0"
+    read_only: true
+    configs:
+      - source: "db_config"
+        target: "/docker-entrypoint-initdb.d/mongoconfig.js"
+    secrets:
+      - "db_username"
+      - "db_password"
+    environment:
+      - "MONGO_INITDB_DATABASE=xbs"
+      - "MONGO_INITDB_ROOT_PASSWORD_FILE=/run/secrets/db_username"
+      - "MONGO_INITDB_ROOT_USERNAME_FILE=/run/secrets/db_password"
+    networks:
+      - "default"
+    volumes:
+      - type: "tmpfs"
+        target: "/tmp"
+      - type: "tmpfs"
+        target: "/run"
+      - type: "volume"
+        source: "xbs-db-data"
+        target: "/data/db"
+      - type: "volume"
+        source: "xbs-configdb-data"
+        target: "/data/configdb"
+    deploy:
+      labels:
+        - "com.ouroboros.enable=true"
+        - "traefik.enable=false"
+      restart_policy:
+        condition: "on-failure"
+        delay: "2s"
+
+  api:
+    image: "xbrowsersync/api:1.1.8"
+    depends_on:
+      - "db"
+    networks:
+      - "default"
+      - "traefik-public"
+    secrets:
+      - source: "settings"
+        target: "/usr/src/api/config/settings.json"
+    read_only: true
+    deploy:
+      labels:
+        - "com.ouroboros.enable=true"
+        - "traefik.enable=true"
+        - "traefik.tags=traefik-public"
+        - "traefik.docker.network=traefik-public"
+        - "traefik.frontend.rule=Host:docwhat.org;PathPrefixStrip:/xbrowsersync-api/"
+        - "traefik.port=8080"
+        - "traefik.backend=xbs-api"
+
+volumes:
+  xbs-db-data:
+    name: "xbs-db-data"
+  xbs-configdb-data:
+    name: "xbs-configdb-data"
+
+configs:
+  db_config:
+    file: xbs_db_config.js
+
+secrets:
+  db_username:
+    file: secrets/xbs_db_username.txt
+    name: "xbs_db_username-${XBS_DB_USERNAME_TXT_SUM}"
+  db_password:
+    file: secrets/xbs_db_password.txt
+    name: "xbs_db_password-${XBS_DB_PASSWORD_TXT_SUM}"
+  settings:
+    file: secrets/xbs_settings.json
+    name: "xbs_settings-${XBS_SETTINGS_JSON_SUM}"
+
+networks:
+  default:
+  traefik-public:
+    external: true

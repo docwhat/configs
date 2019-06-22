@@ -1,0 +1,30 @@
+version: '3.7'
+
+services:
+
+  # Redirect "go get" for docwhat.org
+  go-importd:
+    image: "docwhat/go-importd"
+    read_only: true
+    networks:
+      - traefik-public
+    environment:
+      - "GO_IMPORTD_GITHUB_USER_URL=https://github.com/docwhat"
+      - "GO_IMPORTD_IMPORT_DOMAIN=docwhat.org"
+    deploy:
+      labels:
+      - "com.ouroboros.enable=true"
+      - "traefik.enable=true"
+      - "traefik.tags=traefik-public"
+      - "traefik.docker.network=traefik-public"
+      - "traefik.frontend.rule=Host:docwhat.org;Method:GET,HEAD;Query:go-get=1"
+      - "traefik.port=80"
+      - "traefik.backend=go-importd"
+      restart_policy:
+        condition: "on-failure"
+        delay: "2s"
+      replicas: 2
+
+networks:
+  traefik-public:
+    external: true

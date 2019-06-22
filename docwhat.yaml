@@ -1,0 +1,70 @@
+version: '3.7'
+
+services:
+
+  # My Blog
+  blog:
+    image: "docwhat/docwhat:stable"
+    read_only: true
+    volumes:
+    - type: tmpfs
+      target: "/var/cache/nginx"
+    - type: tmpfs
+      target: "/run"
+    networks:
+      - traefik-public
+
+    deploy:
+      labels:
+      - "com.ouroboros.enable=true"
+      - "traefik.enable=true"
+      - "traefik.tags=traefik-public"
+      - "traefik.docker.network=traefik-public"
+      - "traefik.frontend.rule=Host:docwhat.org,www.docwhat.org"
+      - "traefik.port=80"
+      - "traefik.backend=docwhat.org"
+      - "traefik.frontend.headers.SSLRedirect=true"
+      - "traefik.frontend.headers.SSLForceHost=true"
+      - "traefik.frontend.priority=10"
+      restart_policy:
+        condition: "on-failure"
+        delay: "2s"
+      update_config:
+        failure_action: "rollback"
+        monitor: 1m
+        order: "start-first"
+        parallelism: 2
+      replicas: 3
+
+  next:
+    image: "docwhat/docwhat:master"
+    read_only: true
+    volumes:
+    - type: tmpfs
+      target: "/var/cache/nginx"
+    - type: tmpfs
+      target: "/run"
+    networks:
+      - traefik-public
+
+    deploy:
+      labels:
+      - "com.ouroboros.enable=true"
+      - "traefik.enable=true"
+      - "traefik.tags=traefik-public"
+      - "traefik.docker.network=traefik-public"
+      - "traefik.frontend.rule=Host:next.docwhat.org"
+      - "traefik.port=80"
+      - "traefik.backend=next.docwhat.org"
+      restart_policy:
+        condition: "on-failure"
+        delay: "2s"
+      update_config:
+        failure_action: "rollback"
+        monitor: 1m
+        order: "start-first"
+      replicas: 2
+
+networks:
+  traefik-public:
+    external: true

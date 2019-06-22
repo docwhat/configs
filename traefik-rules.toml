@@ -1,0 +1,74 @@
+[backends]
+
+[backends.fake]
+
+[backends.fake.servers.s1]
+url = "http://127.1.1.1"
+
+[frontends]
+
+[frontends.holtjeorg]
+backend = "fake"
+
+[frontends.holtjeorg.routes.host]
+rule = "Host:holtje.org"
+
+[frontends.holtjeorg.redirect]
+regex = "^https?://holtje.org/(.*)"
+replacement = "https://docwhat.org/$1"
+permanent = false
+
+[frontends.gerforg]
+backend = "fake"
+
+[frontends.gerforg.routes.host]
+rule = "Host:gerf.org"
+
+[frontends.gerforg.redirect]
+regex = "^https?://gerf.org/(.*)"
+replacement = "https://docwhat.org/$1"
+permanent = false
+
+[frontends.christian]
+backend = "fake"
+
+[frontends.christian.routes.host]
+rule = "Host:christian.holtje.org"
+
+[frontends.christian.redirect]
+regex = "^https?://christian.holtje.org/(.*)"
+replacement = "https://docwhat.org/$1"
+permanent = true
+
+[frontends.docwhatcom]
+backend = "fake"
+
+[frontends.docwhatcom.routes.host]
+rule = "Host:docwhat.com"
+
+[frontends.docwhatcom.redirect]
+regex = "^https?://docwhat.com/(.*)"
+replacement = "https://docwhat.org/$1"
+permanent = true
+
+[frontends.docwhatinfo]
+backend = "fake"
+
+[frontends.docwhatinfo.routes.host]
+rule = "Host:docwhat.info"
+
+[frontends.docwhatinfo.redirect]
+regex = "^https?://docwhat.info/(.*)"
+replacement = "https://docwhat.org/$1"
+permanent = true
+
+[frontends.docwhatme]
+backend = "fake"
+
+[frontends.docwhatme.routes.host]
+rule = "Host:docwhat.me"
+
+[frontends.docwhatme.redirect]
+regex = "^https?://docwhat.me/(.*)"
+replacement = "https://docwhat.org/$1"
+permanent = true

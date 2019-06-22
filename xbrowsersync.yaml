@@ -64,7 +64,7 @@ volumes:
 
 configs:
   db_config:
-    file: xbs_db_config.js
+    file: "configs/xbs_db_config.js"
 
 secrets:
   db_username:

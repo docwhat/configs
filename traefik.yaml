@@ -93,7 +93,7 @@ volumes:
 
 configs:
   rules:
-    file: "traefik-rules.toml"
+    file: "configs/traefik-rules.toml"
 
 secrets:
   htpasswd:

@@ -1,0 +1,6 @@
+# vim:set ft=yaml:
+-   repo: git@github.com:Yelp/detect-secrets
+    rev: v0.12.4
+    hooks:
+    -   id: detect-secrets
+        args: ["--baseline", ".secrets.baseline"]

@@ -11,14 +11,21 @@ services:
         published: 443
         mode: host
     read_only: true
+
     configs:
       - source: "rules"
         target: "/rules.toml"
+
+    secrets:
+      - source: "htpasswd"
+        target: "/htpasswd"
+
     volumes:
       - "/var/run/docker.sock:/var/run/docker.sock:rw"
       - "traefik-data:/data:rw"
       - type: tmpfs
         target: "/tmp"
+
     command:
       - "--debug=false"
       - "--logLevel=WARNING"
@@ -54,9 +61,6 @@ services:
       - "--file.filename=/rules.toml"
       - "--file.watch"
 
-    secrets:
-      - "htpasswd"
-
     deploy:
       labels:
         - "com.ouroboros.enable=true"
@@ -64,15 +68,15 @@ services:
         - "traefik.tags=traefik-public"
         - "traefik.docker.network=traefik-public"
         - "traefik.frontend.rule=Host:docwhat.org;PathPrefixStrip:/traefik/"
-        - "traefik.frontend.auth.basic.usersFile=/run/secrets/htpasswd"
+        - "traefik.frontend.auth.basic.usersFile=/htpasswd"
         - "traefik.port=8080"
         - "traefik.backend=traefik"
 
       placement:
         constraints:
         - node.role == manager
-        # preferences:
-        # - spread: node.id
+        preferences:
+        - spread: node.id
       restart_policy:
         condition: on-failure
         delay: 10s

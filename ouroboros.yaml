@@ -9,7 +9,7 @@ services:
       - "INTERVAL=300"
       - "LABELS_ONLY=true"
       - "LABEL_ENABLE=true"
-      - "LOG_LEVEL=debug"
+      - "LOG_LEVEL=info"
       - "NOTIFIERS=${APPRISE_PUSHOVER_VALUE}"
       - "SELF_UPDATE=true"
       - "SWARM=true"

@@ -28,7 +28,7 @@ services:
 
     command:
       - "--debug=false"
-      - "--logLevel=INFO"
+      - "--logLevel=WARNING"
       # logLevel values "ERROR" "WARNING" "INFO" "DEBUG"
       - "--defaultEntryPoints=https,http"
       - "--sendAnonymousUsage"

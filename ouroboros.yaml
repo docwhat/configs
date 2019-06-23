@@ -10,7 +10,7 @@ services:
       - "LABELS_ONLY=true"
       - "LABEL_ENABLE=true"
       - "LOG_LEVEL=debug"
-      - "NOTIFIERS=${APPRISE_PUSHOVER_CARBONX_VALUE}"
+      - "NOTIFIERS=${APPRISE_PUSHOVER_VALUE}"
       - "SELF_UPDATE=true"
       - "SWARM=true"
       - "TZ=America/New_York"

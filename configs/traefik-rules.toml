@@ -44,21 +44,21 @@ permanent = true
 backend = "fake"
 
 [frontends.docwhatcom.routes.host]
-rule = "Host:docwhat.com"
+rule = "Host:docwhat.com,www.docwhat.com"
 
 [frontends.docwhatcom.redirect]
-regex = "^https?://docwhat.com/(.*)"
-replacement = "https://docwhat.org/$1"
+regex = "^https?://(www\\.)?docwhat.com/(.*)"
+replacement = "https://docwhat.org/$2"
 permanent = true
 
 [frontends.docwhatinfo]
 backend = "fake"
 
 [frontends.docwhatinfo.routes.host]
-rule = "Host:docwhat.info"
+rule = "Host:docwhat.info,www.docwhat.info"
 
 [frontends.docwhatinfo.redirect]
-regex = "^https?://docwhat.info/(.*)"
+regex = "^https?://(www\\.)?docwhat.info/(.*)"
 replacement = "https://docwhat.org/$1"
 permanent = true
 
@@ -66,9 +66,9 @@ permanent = true
 backend = "fake"
 
 [frontends.docwhatme.routes.host]
-rule = "Host:docwhat.me"
+rule = "Host:docwhat.me,www.docwhat.me"
 
 [frontends.docwhatme.redirect]
-regex = "^https?://docwhat.me/(.*)"
+regex = "^https?://(www\\.)?docwhat.me/(.*)"
 replacement = "https://docwhat.org/$1"
 permanent = true

@@ -43,7 +43,7 @@ declare -ar configurations
 declare -r dry_run
 
 # Gather checksums as variables
-for path in secrets/*; do
+for path in secrets/* configs/*; do
   basename="$(basename "$path" | perl -p -e 'tr/a-z/A-Z/;' -e 's!\W+!_!g;')"
   sum="$(openssl sha256 -r "${path}" | cut -c1-10)"
   value="$(head -n1 "${path}")"

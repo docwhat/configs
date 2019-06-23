@@ -28,7 +28,7 @@ services:
 
     command:
       - "--debug=false"
-      - "--logLevel=WARNING"
+      - "--logLevel=INFO"
       # logLevel values "ERROR" "WARNING" "INFO" "DEBUG"
       - "--defaultEntryPoints=https,http"
       - "--sendAnonymousUsage"
@@ -98,6 +98,7 @@ volumes:
 configs:
   rules:
     file: "configs/traefik-rules.toml"
+    name: "traefik_rules-${TRAEFIK_RULES_TOML_SUM}"
 
 secrets:
   htpasswd:

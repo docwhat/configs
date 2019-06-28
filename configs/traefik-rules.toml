@@ -25,7 +25,7 @@ backend = "fake"
 rule = "Host:gerf.org"
 
 [frontends.gerforg.redirect]
-regex = "^https?://gerf.org/(.*)"
+regex = "^https?://gerf.org/([^.].*)"
 replacement = "https://docwhat.org/$1"
 permanent = false
 

@@ -1,0 +1,51 @@
+version: '3.7'
+
+services:
+
+  letsencrypt:
+    image: "nginx:stable-alpine"
+    read_only: true
+    volumes:
+    - type: tmpfs
+      target: "/var/cache/nginx"
+    - type: tmpfs
+      target: "/run"
+    - type: "bind"
+      source: "/var/letsencrypt/"
+      target: "/usr/share/nginx/html/"
+      # readonly: true
+    networks:
+      - traefik-public
+    healthcheck:
+      interval: 1m
+      timeout: 10s
+      retries: 5
+      test:
+      - "CMD"
+      - "wget"
+      - "http://localhost/.well-known/confirm"
+      - "-q"
+      - "-O-"
+    deploy:
+      labels:
+      - "com.ouroboros.enable=true"
+      - "traefik.enable=true"
+      - "traefik.tags=traefik-public"
+      - "traefik.docker.network=traefik-public"
+      - "traefik.port=80"
+      - "traefik.frontend.rule=Host:gerf.org;PathPrefix:/.well-known/"
+      - "traefik.backend=letsencrypt"
+      - "traefik.frontend.headers.SSLForceHost=false"
+
+      restart_policy:
+        condition: "on-failure"
+        delay: "2s"
+      replicas: 1
+      placement:
+        constraints:
+          - "node.role == manager"
+          - "node.labels.letsencrypt.well-known-mount == true"
+
+networks:
+  traefik-public:
+    external: true

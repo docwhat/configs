@@ -30,9 +30,6 @@ services:
         condition: "on-failure"
         delay: "2s"
       update_config:
-        failure_action: "rollback"
-        monitor: 1m
-        order: "start-first"
         parallelism: 2
       replicas: 3
 
@@ -59,10 +56,6 @@ services:
       restart_policy:
         condition: "on-failure"
         delay: "2s"
-      update_config:
-        failure_action: "rollback"
-        monitor: 1m
-        order: "start-first"
       replicas: 2
 
 networks:

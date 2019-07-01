@@ -11,6 +11,11 @@ services:
       target: "/run"
     networks:
       - traefik-public
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "400k"
+        max-file: "4"
     deploy:
       labels:
       - "com.ouroboros.enable=true"
@@ -37,6 +42,11 @@ services:
       target: "/run"
     networks:
       - traefik-public
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "400k"
+        max-file: "4"
     deploy:
       labels:
       - "com.ouroboros.enable=true"

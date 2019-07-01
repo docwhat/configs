@@ -18,6 +18,11 @@ services:
       # - "DATA_EXPORT=prometheus"
       # - "PROMETHEUS_ADDR=0.0.0.0"
       # - "PROMETHEUS_PORT=8000"
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "400k"
+        max-file: "4"
     healthcheck:
       interval: 30s
       retries: 5

@@ -26,6 +26,12 @@ services:
       - type: tmpfs
         target: "/tmp"
 
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "400k"
+        max-file: "4"
+
     command:
       - "--debug=false"
       - "--logLevel=WARNING"

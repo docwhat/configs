@@ -10,6 +10,11 @@ services:
     networks:
       - "traefik-public"
       - "net"
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "400k"
+        max-file: "4"
     deploy:
       labels:
       - "com.ouroboros.enable=true"
@@ -36,6 +41,11 @@ services:
       - "data:/opt/couchdb/data"
     networks:
       - "net"
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "400k"
+        max-file: "4"
     deploy:
       labels:
       - "com.ouroboros.enable=true"
@@ -59,13 +69,17 @@ services:
       - "/var/run/docker.sock:/var/run/docker.sock:ro"
     networks:
       - "net"
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "400k"
+        max-file: "4"
     deploy:
       labels:
-      - "com.ouroboros.enable=true"
-      - "traefik.enable=false"
+        - "com.ouroboros.enable=true"
+        - "traefik.enable=false"
+        - "swarmpit.agent=true"
       mode: "global"
-      labels:
-        swarmpit.agent: "true"
       resources:
         limits:
           cpus: "0.10"

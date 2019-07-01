@@ -16,6 +16,11 @@ services:
       # readonly: true
     networks:
       - traefik-public
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "400k"
+        max-file: "4"
     healthcheck:
       interval: 1m
       timeout: 10s

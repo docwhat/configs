@@ -8,6 +8,11 @@ services:
     read_only: true
     networks:
       - traefik-public
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "400k"
+        max-file: "4"
     environment:
       - "GO_IMPORTD_GITHUB_USER_URL=https://github.com/docwhat"
       - "GO_IMPORTD_IMPORT_DOMAIN=docwhat.org"

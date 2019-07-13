@@ -5,7 +5,6 @@ services:
     image: "swarmpit/swarmpit"
     environment:
       - "SWARMPIT_DB=http://db:5984"
-      - "SWARMPIT_BASE_URL=/swarmpit/"
     volumes:
       - "/var/run/docker.sock:/var/run/docker.sock:ro"
     networks:
@@ -22,7 +21,7 @@ services:
       - "traefik.enable=true"
       - "traefik.tags=traefik-public"
       - "traefik.docker.network=traefik-public"
-      - "traefik.frontend.rule=Host:docwhat.org;PathPrefixStrip:/swarmpit/"
+      - "traefik.frontend.rule=Host:swarmpit.gerf.net"
       - "traefik.port=8080"
       - "traefik.backend=swarmpit"
       resources:

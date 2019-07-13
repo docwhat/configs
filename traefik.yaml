@@ -73,7 +73,7 @@ services:
         - "traefik.enable=true"
         - "traefik.tags=traefik-public"
         - "traefik.docker.network=traefik-public"
-        - "traefik.frontend.rule=Host:docwhat.org;PathPrefixStrip:/traefik/"
+        - "traefik.frontend.rule=Host:traefik.gerf.net"
         - "traefik.frontend.auth.basic.usersFile=/htpasswd"
         - "traefik.port=8080"
         - "traefik.backend=traefik"

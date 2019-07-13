@@ -48,7 +48,7 @@ services:
       - "traefik.enable=true"
       - "traefik.tags=traefik-public"
       - "traefik.docker.network=traefik-public"
-      - "traefik.frontend.rule=Host:docwhat.org;PathPrefixStrip:/portainer/"
+      - "traefik.frontend.rule=Host:portainer.gerf.net"
       - "traefik.port=9000"
       - "traefik.backend=portainer"
       update_config:

@@ -62,7 +62,7 @@ services:
         - "traefik.enable=true"
         - "traefik.tags=traefik-public"
         - "traefik.docker.network=traefik-public"
-        - "traefik.frontend.rule=Host:docwhat.org;PathPrefixStrip:/xbrowsersync-api/"
+        - "traefik.frontend.rule=Host:xbrowsersync.gerf.net"
         - "traefik.port=8080"
         - "traefik.backend=xbs-api"
 

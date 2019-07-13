@@ -5,6 +5,7 @@ services:
     image: "swarmpit/swarmpit"
     environment:
       - "SWARMPIT_DB=http://db:5984"
+      - "SWARMPIT_BASE_URL=/swarmpit/"
     volumes:
       - "/var/run/docker.sock:/var/run/docker.sock:ro"
     networks:

@@ -16,13 +16,10 @@ services:
         max-size: "400k"
         max-file: "4"
     deploy:
-      update_config:
-        order: "stop-first"
-        failure_action: "rollback"
+      mode: "global"
       restart_policy:
         condition: "on-failure"
         delay: "10s"
-      mode: "global"
       placement:
         constraints:
           - "node.platform.os == linux"
@@ -51,17 +48,16 @@ services:
       - "traefik.frontend.rule=Host:portainer.gerf.net"
       - "traefik.port=9000"
       - "traefik.backend=portainer"
+      replicas: 1
       update_config:
-        order: "stop-first"
         failure_action: "rollback"
       restart_policy:
         condition: "on-failure"
-        delay: "10s"
+        delay: "2s"
       placement:
         constraints:
           - "node.role == manager"
           - "node.labels.portainer.portainer-data == true"
-      replicas: 1
 
 networks:
   agent-network:

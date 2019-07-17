@@ -77,18 +77,13 @@ services:
         - "traefik.frontend.auth.basic.usersFile=/htpasswd"
         - "traefik.port=8080"
         - "traefik.backend=traefik"
-
       placement:
         constraints:
           - "node.role == manager"
         preferences:
-        - spread: node.id
-      restart_policy:
-        condition: on-failure
-        delay: 10s
+          - spread: node.id
       update_config:
         failure_action: rollback
-      replicas: 1
 
     networks:
       - traefik-public

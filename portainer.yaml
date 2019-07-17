@@ -59,7 +59,6 @@ services:
         delay: "10s"
       placement:
         constraints:
-          - "node.gerf == true"
           - "node.role == manager"
           - "node.labels.portainer.portainer-data == true"
       replicas: 1

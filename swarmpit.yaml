@@ -52,7 +52,6 @@ services:
       - "traefik.enable=false"
       placement:
         constraints:
-          - "node.gerf == true"
           - "node.labels.swarmpit.swarmpit-data == true"
       resources:
         limits:

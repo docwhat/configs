@@ -80,7 +80,6 @@ services:
 
       placement:
         constraints:
-          - "node.gerf == true"
           - "node.role == manager"
         preferences:
         - spread: node.id

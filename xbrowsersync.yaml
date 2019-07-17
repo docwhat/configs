@@ -75,6 +75,7 @@ volumes:
 configs:
   db_config:
     file: "configs/xbs_db_config.js"
+    name: "xbrowsersync-${XBS_DB_CONFIG_JS_SUM}"
 
 secrets:
   db_username:

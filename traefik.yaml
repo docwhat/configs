@@ -80,7 +80,8 @@ services:
 
       placement:
         constraints:
-        - node.role == manager
+          - "node.gerf == true"
+          - "node.role == manager"
         preferences:
         - spread: node.id
       restart_policy:

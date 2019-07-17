@@ -48,6 +48,7 @@ services:
       replicas: 1
       placement:
         constraints:
+          - "node.gerf == true"
           - "node.role == manager"
           - "node.labels.letsencrypt.well-known-mount == true"
 

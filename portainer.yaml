@@ -17,6 +17,10 @@ services:
         max-file: "4"
     deploy:
       mode: "global"
+      resources:
+        limits:
+          cpus: "0.20"
+          memory: "16M"
       restart_policy:
         condition: "on-failure"
         delay: "10s"
@@ -49,6 +53,10 @@ services:
       - "traefik.port=9000"
       - "traefik.backend=portainer"
       replicas: 1
+      resources:
+        limits:
+          cpus: "0.50"
+          memory: "128M"
       update_config:
         failure_action: "rollback"
       restart_policy:

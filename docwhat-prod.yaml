@@ -2,7 +2,7 @@ version: '3.7'
 
 services:
   blog:
-    image: "docwhat/docwhat:stable"
+    image: "docwhat/docwhat:live"
     read_only: true
     volumes:
     - type: "tmpfs"

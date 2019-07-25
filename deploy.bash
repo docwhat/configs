@@ -71,7 +71,9 @@ for config in ${configurations[@]}; do
   stack_name="$(basename "$config" .yaml)"
 
   echo "=> deploying ${stack_name}..."
-  docker stack deploy --with-registry-auth --prune -c "$config" "$stack_name"
+  docker stack deploy --with-registry-auth --prune -c "$config" "$stack_name" &
 done
+
+wait
 
 # EOF

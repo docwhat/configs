@@ -77,6 +77,11 @@ services:
         - "traefik.frontend.auth.basic.usersFile=/htpasswd"
         - "traefik.port=8080"
         - "traefik.backend=traefik"
+      resources:
+        limits:
+          memory: "128M"
+        reservations:
+          memory: "16M"
       placement:
         constraints:
           - "node.role == manager"

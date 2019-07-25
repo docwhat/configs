@@ -30,10 +30,8 @@ services:
       - "traefik.frontend.priority=10"
       resources:
         limits:
-          cpus: "0.50"
           memory: "32M"
         reservations:
-          cpus: "0.25"
           memory: "8M"
       restart_policy:
         delay: "2s"

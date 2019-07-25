@@ -25,6 +25,11 @@ services:
       - "traefik.frontend.rule=Host:docwhat.org;Method:GET,HEAD;Query:go-get=1"
       - "traefik.port=80"
       - "traefik.backend=go-importd"
+      resources:
+        limits:
+          memory: "16M"
+        reservations:
+          memory: "4M"
       restart_policy:
         condition: "on-failure"
         delay: "2s"

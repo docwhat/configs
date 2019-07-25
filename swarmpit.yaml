@@ -26,11 +26,10 @@ services:
       - "traefik.backend=swarmpit"
       resources:
         limits:
-          cpus: "0.50"
           memory: "512M"
         reservations:
-          cpus: "0.25"
           memory: "256M"
+      replicas: 1
       placement:
         constraints:
           - "node.role == manager"
@@ -55,10 +54,8 @@ services:
           - "node.labels.swarmpit.swarmpit-data == true"
       resources:
         limits:
-          cpus: "0.30"
           memory: "256M"
         reservations:
-          cpus: "0.15"
           memory: "128M"
 
   agent:
@@ -82,10 +79,8 @@ services:
       mode: "global"
       resources:
         limits:
-          cpus: "0.10"
           memory: "32M"
         reservations:
-          cpus: "0.05"
           memory: "16M"
 
 networks:

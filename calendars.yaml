@@ -56,6 +56,11 @@ services:
       - "traefik.frontend.rule=Host:docwhat.org;Method:GET,HEAD;PathPrefixStripRegex:/${WORK_CALENDAR_SECRET_VALUE}{?:.ics|}"
       - "traefik.port=80"
       - "traefik.backend=work-calendar"
+      resources:
+        limits:
+          memory: "32M"
+        reservations:
+          memory: "8M"
       restart_policy:
         condition: "on-failure"
         delay: "2s"

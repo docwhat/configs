@@ -17,7 +17,7 @@ services:
         max-file: "4"
     deploy:
       labels:
-      - "com.ouroboros.enable=true"
+      - "swarmpit.service.deployment.autoredeploy=true"
       - "traefik.enable=true"
       - "traefik.tags=traefik-public"
       - "traefik.docker.network=traefik-public"
@@ -47,7 +47,7 @@ services:
         max-file: "4"
     deploy:
       labels:
-      - "com.ouroboros.enable=true"
+      - "swarmpit.service.deployment.autoredeploy=true"
       - "traefik.enable=false"
       placement:
         constraints:
@@ -73,7 +73,7 @@ services:
         max-file: "4"
     deploy:
       labels:
-        - "com.ouroboros.enable=true"
+        - "swarmpit.service.deployment.autoredeploy=true"
         - "traefik.enable=false"
         - "swarmpit.agent=true"
       mode: "global"

@@ -69,7 +69,7 @@ services:
 
     deploy:
       labels:
-        - "com.ouroboros.enable=true"
+        - "swarmpit.service.deployment.autoredeploy=true"
         - "traefik.enable=true"
         - "traefik.tags=traefik-public"
         - "traefik.docker.network=traefik-public"

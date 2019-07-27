@@ -34,7 +34,7 @@ services:
         target: "/data/configdb"
     deploy:
       labels:
-        - "com.ouroboros.enable=true"
+        - "swarmpit.service.deployment.autoredeploy=true"
         - "traefik.enable=false"
       resources:
         limits:
@@ -63,7 +63,7 @@ services:
     read_only: true
     deploy:
       labels:
-        - "com.ouroboros.enable=true"
+        - "swarmpit.service.deployment.autoredeploy=true"
         - "traefik.enable=true"
         - "traefik.tags=traefik-public"
         - "traefik.docker.network=traefik-public"

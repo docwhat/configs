@@ -23,6 +23,8 @@ services:
       - "traefik.tags=traefik-public"
       - "traefik.docker.network=traefik-public"
       - "traefik.frontend.rule=Host:swarmpit.gerf.net"
+      - "traefik.frontend.headers.STSSeconds=315360000"
+      - "traefik.frontend.headers.STSPreload=true"
       - "traefik.port=8080"
       - "traefik.backend=swarmpit"
       resources:

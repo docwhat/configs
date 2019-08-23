@@ -27,6 +27,8 @@ services:
       - "traefik.backend=docwhat-prod"
       - "traefik.frontend.headers.SSLRedirect=true"
       - "traefik.frontend.headers.SSLForceHost=true"
+      - "traefik.frontend.headers.STSSeconds=315360000"
+      - "traefik.frontend.headers.STSPreload=true"
       - "traefik.frontend.priority=10"
       resources:
         limits:

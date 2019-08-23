@@ -23,6 +23,8 @@ services:
       - "traefik.tags=traefik-public"
       - "traefik.docker.network=traefik-public"
       - "traefik.frontend.rule=Host:docwhat.org;Method:GET,HEAD;Query:go-get=1"
+      - "traefik.frontend.headers.STSSeconds=315360000"
+      - "traefik.frontend.headers.STSPreload=true"
       - "traefik.port=80"
       - "traefik.backend=go-importd"
       resources:

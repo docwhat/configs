@@ -30,7 +30,7 @@ services:
       restart_policy:
         condition: "on-failure"
         delay: "2s"
-      replicas: 2
+      replicas: 1
 
   work:
     image: "docwhat/work-calendar"
@@ -66,7 +66,7 @@ services:
       restart_policy:
         condition: "on-failure"
         delay: "2s"
-      replicas: 2
+      replicas: 1
 
 networks:
   traefik-public:

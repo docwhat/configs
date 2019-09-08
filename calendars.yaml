@@ -58,11 +58,11 @@ services:
       - "traefik.frontend.headers.STSPreload=true"
       - "traefik.port=80"
       - "traefik.backend=work-calendar"
-      resources:
-        limits:
-          memory: "32M"
-        reservations:
-          memory: "8M"
+      # resources:
+      #   limits:
+      #     memory: "32M"
+      #   reservations:
+      #     memory: "8M"
       restart_policy:
         condition: "on-failure"
         delay: "2s"

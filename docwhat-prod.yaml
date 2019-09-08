@@ -30,11 +30,11 @@ services:
       - "traefik.frontend.headers.STSSeconds=315360000"
       - "traefik.frontend.headers.STSPreload=true"
       - "traefik.frontend.priority=10"
-      resources:
-        limits:
-          memory: "32M"
-        reservations:
-          memory: "8M"
+      # resources:
+      #   limits:
+      #     memory: "32M"
+      #   reservations:
+      #     memory: "8M"
       restart_policy:
         delay: "2s"
       replicas: 3

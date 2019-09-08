@@ -41,11 +41,11 @@ services:
       - "traefik.frontend.rule=Host:gerf.org;PathPrefix:/.well-known/"
       - "traefik.backend=letsencrypt"
       - "traefik.frontend.headers.SSLForceHost=false"
-      resources:
-        limits:
-          memory: "32M"
-        reservations:
-          memory: "8M"
+      # resources:
+      #   limits:
+      #     memory: "32M"
+      #   reservations:
+      #     memory: "8M"
       restart_policy:
         condition: "on-failure"
         delay: "2s"

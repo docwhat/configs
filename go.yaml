@@ -29,9 +29,7 @@ services:
       - "traefik.backend=go-importd"
       resources:
         limits:
-          memory: "16M"
-        reservations:
-          memory: "4M"
+          memory: "8M"
       restart_policy:
         condition: "on-failure"
         delay: "2s"

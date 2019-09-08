@@ -36,11 +36,11 @@ services:
       labels:
         - "swarmpit.service.deployment.autoredeploy=true"
         - "traefik.enable=false"
-      resources:
-        limits:
-          memory: "128M"
-        reservations:
-          memory: "20M"
+      # resources:
+      #   limits:
+      #     memory: "128M"
+      #   reservations:
+      #     memory: "20M"
       restart_policy:
         condition: "on-failure"
         delay: "2s"
@@ -72,11 +72,11 @@ services:
         - "traefik.frontend.headers.STSSeconds=315360000"
         - "traefik.frontend.headers.STSPreload=true"
         - "traefik.backend=xbs-api"
-      resources:
-        limits:
-          memory: "128M"
-        reservations:
-          memory: "20M"
+      # resources:
+      #   limits:
+      #     memory: "128M"
+      #   reservations:
+      #     memory: "20M"
 
 volumes:
   xbs-db-data:

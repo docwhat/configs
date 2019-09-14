@@ -34,6 +34,8 @@ services:
         condition: "on-failure"
         delay: "2s"
       replicas: 2
+      update_config:
+        failure_action: rollback
 
 networks:
   traefik-public:

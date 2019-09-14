@@ -4,8 +4,11 @@ set -eu
 
 declare -ra gerf_add=(
   letsencrypt.well-known-mount=true
+
   swarmpit.swarmpit-data=true
   swarmpit.swarmpit-logs=true
+
+  xbrowsersync.db-data=true
 )
 
 declare -ra gerf_rm=(

@@ -83,7 +83,7 @@ services:
         limits:
           memory: "128M"
         reservations:
-          memory: "16M"
+          memory: "56M"
       placement:
         constraints:
           - "node.role == manager"

@@ -36,14 +36,17 @@ services:
       labels:
         - "swarmpit.service.deployment.autoredeploy=true"
         - "traefik.enable=false"
-      # resources:
-      #   limits:
-      #     memory: "128M"
-      #   reservations:
-      #     memory: "20M"
+      placement:
+        constraints:
+          - "node.labels.xbrowsersync.db-data == true"
+      resources:
+        limits:
+          memory: "256M"
       restart_policy:
         condition: "on-failure"
         delay: "2s"
+      update_config:
+        failure_action: rollback
 
   api:
     image: "xbrowsersync/api:1.1.8"
@@ -72,11 +75,14 @@ services:
         - "traefik.frontend.headers.STSSeconds=315360000"
         - "traefik.frontend.headers.STSPreload=true"
         - "traefik.backend=xbs-api"
-      # resources:
-      #   limits:
-      #     memory: "128M"
-      #   reservations:
-      #     memory: "20M"
+      replicas: 2
+      resources:
+        limits:
+          memory: "64M"
+        reservations:
+          memory: "20M"
+      update_config:
+        failure_action: rollback
 
 volumes:
   xbs-db-data:

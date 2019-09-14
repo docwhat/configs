@@ -27,10 +27,13 @@ services:
       - "traefik.backend=street-cleaning"
       - "traefik.frontend.headers.SSLRedirect=false"
       - "traefik.frontend.headers.SSLForceHost=false"
+      resources:
+        limits:
+          memory: "32M"
       restart_policy:
         condition: "on-failure"
         delay: "2s"
-      replicas: 1
+      replicas: 2
 
   work:
     image: "docwhat/work-calendar"
@@ -58,15 +61,15 @@ services:
       - "traefik.frontend.headers.STSPreload=true"
       - "traefik.port=80"
       - "traefik.backend=work-calendar"
-      # resources:
-      #   limits:
-      #     memory: "32M"
-      #   reservations:
-      #     memory: "8M"
+      resources:
+        limits:
+          memory: "32M"
       restart_policy:
         condition: "on-failure"
         delay: "2s"
-      replicas: 1
+      replicas: 2
+      update_config:
+        failure_action: rollback
 
 networks:
   traefik-public:

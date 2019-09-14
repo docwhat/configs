@@ -30,18 +30,17 @@ services:
       - "traefik.frontend.headers.STSSeconds=315360000"
       - "traefik.frontend.headers.STSPreload=true"
       - "traefik.frontend.priority=10"
-      # resources:
-      #   limits:
-      #     memory: "32M"
-      #   reservations:
-      #     memory: "8M"
+      resources:
+        limits:
+          memory: "64M"
       restart_policy:
         delay: "2s"
-      replicas: 2
+      replicas: 3
       rollback_config:
         parallelism: 2
       update_config:
         parallelism: 1
+        failure_action: rollback
 
 networks:
   traefik-public:

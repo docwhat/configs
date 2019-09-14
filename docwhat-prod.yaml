@@ -42,6 +42,7 @@ services:
         parallelism: 2
       update_config:
         parallelism: 2
+        failure_action: rollback
 
 networks:
   traefik-public:

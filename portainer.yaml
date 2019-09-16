@@ -4,26 +4,22 @@ services:
   agent:
     image: "portainer/agent"
     environment:
+      # REQUIRED: Should be equal to the service name prefixed by "tasks." when
+      # deployed inside an overlay network
       AGENT_CLUSTER_ADDR: tasks.agent
+      # AGENT_PORT: 9001
+      # LOG_LEVEL: debug
     volumes:
       - "/var/run/docker.sock:/var/run/docker.sock"
       - "/var/lib/docker/volumes:/var/lib/docker/volumes"
     networks:
       - "agent-network"
-    logging:
-      driver: "json-file"
-      options:
-        max-size: "400k"
-        max-file: "4"
     deploy:
       mode: "global"
-      resources:
-        limits:
-          cpus: "0.20"
-          memory: "16M"
-      restart_policy:
-        condition: "on-failure"
-        delay: "10s"
+      # resources:
+      #   limits:
+      #     cpus: "0.20"
+      #     memory: "16M"
       placement:
         constraints:
           - "node.platform.os == linux"
@@ -38,25 +34,21 @@ services:
       - "traefik-public"
     volumes:
       - "portainer-data:/data:rw"
-    logging:
-      driver: "json-file"
-      options:
-        max-size: "400k"
-        max-file: "4"
     deploy:
       labels:
-      - "com.ouroboros.enable=true"
       - "traefik.enable=true"
       - "traefik.tags=traefik-public"
       - "traefik.docker.network=traefik-public"
       - "traefik.frontend.rule=Host:portainer.gerf.net"
+      - "traefik.frontend.headers.STSSeconds=315360000"
+      - "traefik.frontend.headers.STSPreload=true"
       - "traefik.port=9000"
       - "traefik.backend=portainer"
       replicas: 1
-      resources:
-        limits:
-          cpus: "0.50"
-          memory: "128M"
+      # resources:
+      #   limits:
+      #     cpus: "0.50"
+      #     memory: "128M"
       update_config:
         failure_action: "rollback"
       restart_policy:

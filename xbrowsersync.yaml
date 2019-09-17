@@ -16,11 +16,6 @@ services:
       - "MONGO_INITDB_ROOT_USERNAME_FILE=/run/secrets/db_password"
     networks:
       - "default"
-    logging:
-      driver: "json-file"
-      options:
-        max-size: "400k"
-        max-file: "4"
     volumes:
       - type: "tmpfs"
         target: "/tmp"
@@ -41,7 +36,7 @@ services:
           - "node.labels.xbrowsersync.db-data == true"
       resources:
         limits:
-          memory: "256M"
+          memory: "64M"
       restart_policy:
         condition: "on-failure"
         delay: "2s"

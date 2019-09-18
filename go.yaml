@@ -36,6 +36,9 @@ services:
       replicas: 2
       update_config:
         failure_action: rollback
+      placement:
+        constraints:
+          - "node.role==worker"
 
 networks:
   traefik-public:

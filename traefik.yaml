@@ -81,9 +81,7 @@ services:
         - "traefik.backend=traefik"
       resources:
         limits:
-          memory: "128M"
-        reservations:
-          memory: "56M"
+          memory: "100M"
       placement:
         constraints:
           - "node.role == manager"

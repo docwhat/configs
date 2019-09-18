@@ -11,11 +11,6 @@ services:
       target: "/run"
     networks:
       - traefik-public
-    logging:
-      driver: "json-file"
-      options:
-        max-size: "400k"
-        max-file: "4"
     deploy:
       labels:
       - "swarmpit.service.deployment.autoredeploy=true"
@@ -29,11 +24,14 @@ services:
       - "traefik.frontend.headers.SSLForceHost=false"
       resources:
         limits:
-          memory: "32M"
+          memory: "16M"
       restart_policy:
         condition: "on-failure"
         delay: "2s"
       replicas: 2
+      placement:
+        constraints:
+          - "node.role==worker"
 
   work:
     image: "docwhat/work-calendar"
@@ -45,11 +43,6 @@ services:
       target: "/run"
     networks:
       - traefik-public
-    logging:
-      driver: "json-file"
-      options:
-        max-size: "400k"
-        max-file: "4"
     deploy:
       labels:
       - "swarmpit.service.deployment.autoredeploy=true"
@@ -63,13 +56,16 @@ services:
       - "traefik.backend=work-calendar"
       resources:
         limits:
-          memory: "32M"
+          memory: "16M"
       restart_policy:
         condition: "on-failure"
         delay: "2s"
       replicas: 2
       update_config:
         failure_action: rollback
+      placement:
+        constraints:
+          - "node.role==worker"
 
 networks:
   traefik-public:

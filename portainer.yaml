@@ -16,16 +16,15 @@ services:
       - "agent-network"
     deploy:
       mode: "global"
-      # resources:
-      #   limits:
-      #     cpus: "0.20"
-      #     memory: "16M"
+      resources:
+        limits:
+          memory: "16M"
       placement:
         constraints:
           - "node.platform.os == linux"
 
   portainer:
-    image: "portainer/portainer"
+    image: "portainer/portainer:1.22.0"
     command:
       - "--host=tcp://tasks.agent:9001"
       - "--tlsskipverify"
@@ -45,10 +44,9 @@ services:
       - "traefik.port=9000"
       - "traefik.backend=portainer"
       replicas: 1
-      # resources:
-      #   limits:
-      #     cpus: "0.50"
-      #     memory: "128M"
+      resources:
+        limits:
+          memory: "50M"
       update_config:
         failure_action: "rollback"
       restart_policy:

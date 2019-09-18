@@ -32,7 +32,7 @@ services:
       - "traefik.frontend.priority=10"
       resources:
         limits:
-          memory: "64M"
+          memory: "32M"
       restart_policy:
         delay: "2s"
       replicas: 3
@@ -41,6 +41,9 @@ services:
       update_config:
         parallelism: 1
         failure_action: rollback
+      placement:
+        constraints:
+          - "node.role==worker"
 
 networks:
   traefik-public:

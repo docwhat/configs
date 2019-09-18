@@ -67,23 +67,18 @@ services:
       - "logs:/var/lib/influxdb"
     networks:
       - "net"
-    logging:
-      driver: "json-file"
-      options:
-        max-size: "400k"
-        max-file: "4"
     deploy:
       labels:
         - "swarmpit.service.deployment.autoredeploy=true"
         - "traefik.enable=false"
       placement:
         constraints:
-          - "node.labels.swarmpit.swarmpit-logs == true"
+          - "node.labels.swarmpit.swarmpit-logs==true"
       update_config:
         failure_action: rollback
       resources:
         limits:
-          memory: "128M"
+          memory: "200M"
 
   agent:
     image: "swarmpit/agent"

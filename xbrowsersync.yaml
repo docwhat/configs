@@ -78,6 +78,9 @@ services:
           memory: "20M"
       update_config:
         failure_action: rollback
+      placement:
+        constraints:
+          - "node.role==worker"
 
 volumes:
   xbs-db-data:

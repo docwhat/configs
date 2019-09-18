@@ -43,7 +43,7 @@ services:
       - "traefik.frontend.headers.SSLForceHost=false"
       resources:
         limits:
-          memory: "32M"
+          memory: "16M"
       restart_policy:
         condition: "on-failure"
         delay: "2s"

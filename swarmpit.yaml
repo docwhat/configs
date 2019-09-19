@@ -104,6 +104,7 @@ services:
 
 networks:
   net:
+    driver: "overlay"
     attachable: true
   traefik-public:
     external: true

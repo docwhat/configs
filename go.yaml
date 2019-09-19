@@ -1,5 +1,13 @@
 version: '3.7'
 
+x-common:
+  logging:
+    &default-logging
+    options:
+      max-size: "200k"
+      max-file: "2"
+    driver: "json-file"
+
 services:
 
   # Redirect "go get" for docwhat.org
@@ -8,11 +16,7 @@ services:
     read_only: true
     networks:
       - traefik-public
-    logging:
-      driver: "json-file"
-      options:
-        max-size: "400k"
-        max-file: "4"
+    logging: *default-logging
     environment:
       - "GO_IMPORTD_GITHUB_USER_URL=https://github.com/docwhat"
       - "GO_IMPORTD_IMPORT_DOMAIN=docwhat.org"

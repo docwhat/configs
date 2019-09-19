@@ -1,5 +1,13 @@
 version: '3.7'
 
+x-common:
+  logging:
+    &default-logging
+    options:
+      max-size: "200k"
+      max-file: "2"
+    driver: "json-file"
+
 services:
   db:
     image: "mongo:4.0"
@@ -16,6 +24,7 @@ services:
       - "MONGO_INITDB_ROOT_USERNAME_FILE=/run/secrets/db_password"
     networks:
       - "default"
+    logging: *default-logging
     volumes:
       - type: "tmpfs"
         target: "/tmp"
@@ -50,11 +59,7 @@ services:
     networks:
       - "default"
       - "traefik-public"
-    logging:
-      driver: "json-file"
-      options:
-        max-size: "400k"
-        max-file: "4"
+    logging: *default-logging
     secrets:
       - source: "settings"
         target: "/usr/src/api/config/settings.json"

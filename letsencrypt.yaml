@@ -1,5 +1,13 @@
 version: '3.7'
 
+x-common:
+  logging:
+    &default-logging
+    options:
+      max-size: "200k"
+      max-file: "2"
+    driver: "json-file"
+
 services:
 
   letsencrypt:
@@ -16,11 +24,7 @@ services:
       # readonly: true
     networks:
       - traefik-public
-    logging:
-      driver: "json-file"
-      options:
-        max-size: "400k"
-        max-file: "4"
+    logging: *default-logging
     healthcheck:
       interval: 1m
       timeout: 10s

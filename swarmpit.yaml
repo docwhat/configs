@@ -1,5 +1,13 @@
 version: "3.7"
 
+x-common:
+  logging:
+    &default-logging
+    options:
+      max-size: "200k"
+      max-file: "2"
+    driver: "json-file"
+
 services:
   app:
     image: "swarmpit/swarmpit"
@@ -11,11 +19,7 @@ services:
     networks:
       - "traefik-public"
       - "net"
-    logging:
-      driver: "json-file"
-      options:
-        max-size: "400k"
-        max-file: "4"
+    logging: *default-logging
     deploy:
       labels:
       - "swarmpit.service.deployment.autoredeploy=true"
@@ -43,11 +47,7 @@ services:
       - "data:/opt/couchdb/data"
     networks:
       - "net"
-    logging:
-      driver: "json-file"
-      options:
-        max-size: "400k"
-        max-file: "4"
+    logging: *default-logging
     deploy:
       labels:
       - "swarmpit.service.deployment.autoredeploy=true"
@@ -67,6 +67,7 @@ services:
       - "logs:/var/lib/influxdb"
     networks:
       - "net"
+    logging: *default-logging
     deploy:
       labels:
         - "swarmpit.service.deployment.autoredeploy=true"
@@ -88,11 +89,7 @@ services:
       - "/var/run/docker.sock:/var/run/docker.sock:ro"
     networks:
       - "net"
-    logging:
-      driver: "json-file"
-      options:
-        max-size: "400k"
-        max-file: "4"
+    logging: *default-logging
     deploy:
       labels:
         - "swarmpit.service.deployment.autoredeploy=true"

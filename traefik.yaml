@@ -1,5 +1,13 @@
 version: '3.7'
 
+x-common:
+  logging:
+    &default-logging
+    options:
+      max-size: "200k"
+      max-file: "2"
+    driver: "json-file"
+
 services:
   traefik:
     image: "traefik:maroilles"
@@ -26,11 +34,7 @@ services:
       - type: tmpfs
         target: "/tmp"
 
-    logging:
-      driver: "json-file"
-      options:
-        max-size: "400k"
-        max-file: "4"
+    logging: *default-logging
 
     command:
       - "--debug=false"

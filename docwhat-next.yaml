@@ -1,5 +1,13 @@
 version: '3.7'
 
+x-common:
+  logging:
+    &default-logging
+    options:
+      max-size: "200k"
+      max-file: "2"
+    driver: "json-file"
+
 services:
   blog:
     image: "docwhat/docwhat:master"
@@ -11,11 +19,7 @@ services:
       target: "/run"
     networks:
       - "traefik-public"
-    logging:
-      driver: "json-file"
-      options:
-        max-size: "200k"
-        max-file: "2"
+    logging: *default-logging
     deploy:
       labels:
       - "swarmpit.service.deployment.autoredeploy=true"

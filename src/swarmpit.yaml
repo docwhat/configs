@@ -4,7 +4,7 @@ version: "3.7"
 
 services:
   swarmpit-app:
-    image: "swarmpit/swarmpit:1.7"
+    image: "swarmpit/swarmpit:latest"
     environment:
       - "SWARMPIT_DB=http://couchdb:5984"
       - "SWARMPIT_INFLUXDB=http://influxdb:8086"

@@ -1,12 +1,6 @@
 version: '3.7'
 
-x-common:
-  logging:
-    &default-logging
-    options:
-      max-size: "200k"
-      max-file: "2"
-    driver: "json-file"
+{{file.Read "include/x-common.yaml"}}
 
 services:
 
@@ -21,6 +15,7 @@ services:
       - "GO_IMPORTD_GITHUB_USER_URL=https://github.com/docwhat"
       - "GO_IMPORTD_IMPORT_DOMAIN=docwhat.org"
     deploy:
+      <<: *twelve-deploy
       labels:
       - "swarmpit.service.deployment.autoredeploy=true"
       - "traefik.enable=true"
@@ -34,15 +29,6 @@ services:
       resources:
         limits:
           memory: "8M"
-      restart_policy:
-        condition: "on-failure"
-        delay: "2s"
-      replicas: 2
-      update_config:
-        failure_action: rollback
-      placement:
-        constraints:
-          - "node.role==worker"
 
 networks:
   traefik-public:

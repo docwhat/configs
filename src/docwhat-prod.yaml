@@ -1,15 +1,9 @@
 version: '3.7'
 
-x-common:
-  logging:
-    &default-logging
-    options:
-      max-size: "200k"
-      max-file: "2"
-    driver: "json-file"
+{{file.Read "include/x-common.yaml"}}
 
 services:
-  blog:
+  prod-blog:
     image: "docwhat/docwhat:live"
     read_only: true
     volumes:
@@ -21,6 +15,7 @@ services:
       - "traefik-public"
     logging: *default-logging
     deploy:
+      <<: *twelve-deploy
       labels:
       - "swarmpit.service.deployment.autoredeploy=true"
       - "traefik.enable=true"
@@ -37,17 +32,7 @@ services:
       resources:
         limits:
           memory: "64M"
-      restart_policy:
-        delay: "2s"
       replicas: 3
-      rollback_config:
-        parallelism: 2
-      update_config:
-        parallelism: 2
-        failure_action: rollback
-      placement:
-        constraints:
-          - "node.role==worker"
 
 networks:
   traefik-public:

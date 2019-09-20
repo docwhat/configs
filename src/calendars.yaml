@@ -1,15 +1,9 @@
 version: '3.7'
 
-x-common:
-  logging:
-    &default-logging
-    options:
-      max-size: "200k"
-      max-file: "2"
-    driver: "json-file"
+{{file.Read "include/x-common.yaml"}}
 
 services:
-  street-cleaning:
+  calendar-street-cleaning:
     image: "docwhat/street_cleaning"
     read_only: true
     volumes:
@@ -21,6 +15,7 @@ services:
       - traefik-public
     logging: *default-logging
     deploy:
+      <<: *twelve-deploy
       labels:
       - "swarmpit.service.deployment.autoredeploy=true"
       - "traefik.enable=true"
@@ -34,15 +29,8 @@ services:
       resources:
         limits:
           memory: "16M"
-      restart_policy:
-        condition: "on-failure"
-        delay: "2s"
-      replicas: 2
-      placement:
-        constraints:
-          - "node.role==worker"
 
-  work:
+  calendar-work:
     image: "docwhat/work-calendar"
     read_only: true
     volumes:
@@ -54,6 +42,7 @@ services:
       - traefik-public
     logging: *default-logging
     deploy:
+      <<: *twelve-deploy
       labels:
       - "swarmpit.service.deployment.autoredeploy=true"
       - "traefik.enable=true"
@@ -67,15 +56,7 @@ services:
       resources:
         limits:
           memory: "16M"
-      restart_policy:
-        condition: "on-failure"
-        delay: "2s"
       replicas: 2
-      update_config:
-        failure_action: rollback
-      placement:
-        constraints:
-          - "node.role==worker"
 
 networks:
   traefik-public:

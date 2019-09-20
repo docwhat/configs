@@ -1,20 +1,14 @@
 version: "3.7"
 
-x-common:
-  logging:
-    &default-logging
-    options:
-      max-size: "200k"
-      max-file: "2"
-    driver: "json-file"
+{{file.Read "include/x-common.yaml"}}
 
 services:
-  agent:
+  portainer-agent:
     image: "portainer/agent"
     environment:
       # REQUIRED: Should be equal to the service name prefixed by "tasks." when
       # deployed inside an overlay network
-      AGENT_CLUSTER_ADDR: tasks.agent
+      AGENT_CLUSTER_ADDR: tasks.portainer-agent
       # AGENT_PORT: 9001
       # LOG_LEVEL: debug
     volumes:
@@ -35,7 +29,7 @@ services:
   portainer:
     image: "portainer/portainer:1.22.0"
     command:
-      - "--host=tcp://tasks.agent:9001"
+      - "--host=tcp://tasks.portainer-agent:9001"
       - "--tlsskipverify"
     networks:
       - "agent-network"

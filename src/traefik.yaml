@@ -1,12 +1,6 @@
 version: '3.7'
 
-x-common:
-  logging:
-    &default-logging
-    options:
-      max-size: "200k"
-      max-file: "2"
-    driver: "json-file"
+{{file.Read "include/x-common.yaml"}}
 
 services:
   traefik:

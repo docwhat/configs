@@ -9,7 +9,6 @@ function die() {
   exit 10
 }
 
-declare -a configurations=()
 declare dry_run=0
 
 while (($# > 0)); do
@@ -21,25 +20,12 @@ while (($# > 0)); do
     die "Unknown flag: $1"
     ;;
   *)
-    config="$(basename "$1" .yaml).yaml"
-    if [[ -f $config ]]; then
-      if (("${#configurations[@]}" == 0)); then
-        configurations=("$config")
-      else
-        configurations=("${configurations[@]}" "$config")
-      fi
-    else
-      die "Unknown config: $config (derived from from $1)."
-    fi
+    die "Uknown argument: $1"
     ;;
   esac
   shift
 done
 
-if (("${#configurations[@]}" == 0)); then
-  configurations=(*.yaml)
-fi
-declare -ar configurations
 declare -r dry_run
 
 # Gather checksums as variables
@@ -53,27 +39,35 @@ for path in secrets/* configs/*; do
   eval "export '${basename}VALUE=${value}'"
 done
 
-# Verify the configs work
-for config in ${configurations[@]}; do
-  stack_name="$(basename "$config" .yaml)"
+# Build
+echo "=> building..."
+rm -rf build docker-compose.yaml docker-compose.yml
+mkdir -p build/secrets build/configs
+cp -arv configs/* build/configs/
+cp -arv secrets/* build/secrets/
+gomplate --input-dir=src --output-dir=build
 
-  echo "=> checking ${config}..."
-  docker-compose -f "$config" config --quiet 2>&1 | (grep -Ev "'(deploy|configs)'" || :)
-done
+# Verify the configs work
+declare -a config_args=(
+  $(ruby -e 'print Dir["build/*.yaml"].reject { |x| x.start_with? "docker-compose." }.map { |x| "--file=#{x}"  }.join("\n")')
+  --verbose
+  config
+)
+declare -ar config_args
+echo "=> checking..."
+(docker-compose "${config_args[@]}" >docker-compose.yaml) 2>&1 | (grep -Ev "Compose does not support" || :)
 
 if ((dry_run)); then
   echo "DRY_RUN: skipping deploy"
   exit 0
 fi
 
-# Deploy that sucker
-for config in ${configurations[@]}; do
-  stack_name="$(basename "$config" .yaml)"
-
-  echo "=> deploying ${stack_name}..."
-  docker stack deploy --with-registry-auth --prune -c "$config" "$stack_name" &
-done
-
-wait
+echo "=> deploying..."
+docker stack deploy \
+  --compose-file=docker-compose.yaml \
+  --with-registry-auth \
+  --resolve-image=changed \
+  --prune \
+  gerf
 
 # EOF

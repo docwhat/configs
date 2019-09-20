@@ -39,7 +39,7 @@ services:
           - "node.labels.xbrowsersync.db-data == true"
       resources:
         limits:
-          memory: "64M"
+          memory: "100M"
       restart_policy:
         condition: "on-failure"
         delay: "2s"

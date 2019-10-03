@@ -4,7 +4,7 @@ version: '3.7'
 
 services:
   traefik:
-    image: "traefik:maroilles"
+    image: "docker.io/traefik:maroilles"
     ports:
       - target: 80
         published: 80

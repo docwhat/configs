@@ -4,7 +4,7 @@ version: '3.7'
 
 services:
   mongodb:
-    image: "mongo:4.0"
+    image: "docker.io/mongo:4.0"
     read_only: true
     configs:
       - source: "db_config"
@@ -47,7 +47,7 @@ services:
         failure_action: rollback
 
   xbrowsersync-api:
-    image: "xbrowsersync/api:1.1.8"
+    image: "docker.io/xbrowsersync/api:1.1.8"
     depends_on:
       - "mongodb"
     networks:

@@ -4,7 +4,7 @@ version: '3.7'
 
 services:
   calendar-street-cleaning:
-    image: "docwhat/street_cleaning"
+    image: "docker.io/docwhat/street_cleaning:latest"
     read_only: true
     volumes:
     - type: tmpfs
@@ -31,7 +31,7 @@ services:
           memory: "16M"
 
   calendar-work:
-    image: "docwhat/work-calendar"
+    image: "docker.io/docwhat/work-calendar:latest"
     read_only: true
     volumes:
     - type: tmpfs

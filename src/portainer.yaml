@@ -4,7 +4,7 @@ version: "3.7"
 
 services:
   portainer-agent:
-    image: "portainer/agent"
+    image: "docker.io/portainer/agent:latest"
     environment:
       # REQUIRED: Should be equal to the service name prefixed by "tasks." when
       # deployed inside an overlay network
@@ -27,7 +27,7 @@ services:
           - "node.platform.os == linux"
 
   portainer:
-    image: "portainer/portainer:1.22.0"
+    image: "docker.io/portainer/portainer:1.22.0"
     command:
       - "--host=tcp://tasks.portainer-agent:9001"
       - "--tlsskipverify"

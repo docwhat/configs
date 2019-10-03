@@ -6,7 +6,7 @@ services:
 
   # Redirect "go get" for docwhat.org
   go-importd:
-    image: "docwhat/go-importd"
+    image: "docker.io/docwhat/go-importd:latest"
     read_only: true
     networks:
       - traefik-public

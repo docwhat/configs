@@ -4,7 +4,7 @@ version: '3.7'
 
 services:
   prod-blog:
-    image: "docwhat/docwhat:live"
+    image: "docker.io/docwhat/docwhat:live"
     read_only: true
     volumes:
     - type: "tmpfs"

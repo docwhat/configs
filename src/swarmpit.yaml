@@ -4,7 +4,7 @@ version: "3.7"
 
 services:
   swarmpit-app:
-    image: "swarmpit/swarmpit:latest"
+    image: "docker.io/swarmpit/swarmpit:latest"
     environment:
       - "SWARMPIT_DB=http://couchdb:5984"
       - "SWARMPIT_INFLUXDB=http://influxdb:8086"
@@ -39,7 +39,7 @@ services:
           memory: "300M"
 
   couchdb:
-    image: "couchdb:2.3"
+    image: "docker.io/couchdb:2.3"
     volumes:
       - "couchdb:/opt/couchdb/data"
     networks:
@@ -59,7 +59,7 @@ services:
           memory: "64M"
 
   influxdb:
-    image: "influxdb:1.7"
+    image: "docker.io/influxdb:1.7"
     volumes:
       - "influxdb:/var/lib/influxdb"
     networks:
@@ -79,7 +79,7 @@ services:
           memory: "200M"
 
   swarmpit-agent:
-    image: "swarmpit/agent"
+    image: "docker.io/swarmpit/agent:latest"
     environment:
       - "DOCKER_API_VERSION=1.39"
     volumes:

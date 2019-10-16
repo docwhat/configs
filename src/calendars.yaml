@@ -29,6 +29,7 @@ services:
       resources:
         limits:
           memory: "16M"
+      replicas: 2
 
   calendar-work:
     image: "docker.io/docwhat/work-calendar:latest"

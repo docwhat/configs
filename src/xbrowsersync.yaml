@@ -47,7 +47,8 @@ services:
         failure_action: rollback
 
   xbrowsersync-api:
-    image: "docker.io/xbrowsersync/api:1.1.8"
+    # image: "docker.io/xbrowsersync/api:1.1.10"
+    image: "docker.io/docwhat/xbrowsersync-api:1.1.10-healthcheck"
     depends_on:
       - "mongodb"
     networks:

@@ -73,8 +73,6 @@ services:
       resources:
         limits:
           memory: "64M"
-        reservations:
-          memory: "20M"
 
 volumes:
   xbs-db-data:

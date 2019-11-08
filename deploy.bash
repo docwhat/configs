@@ -42,7 +42,7 @@ done
 # Build
 echo "=> building..."
 rm -rf build docker-compose.yaml docker-compose.yml
-./build.rb src/*.yaml
+./process.rb src/*.yaml
 mkdir -p build/secrets build/configs
 cp -av configs/* build/configs/
 cp -av secrets/* build/secrets/

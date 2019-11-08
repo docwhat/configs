@@ -42,9 +42,10 @@ done
 # Build
 echo "=> building..."
 rm -rf build docker-compose.yaml docker-compose.yml
+./build.rb src/*.yaml
 mkdir -p build/secrets build/configs
-cp -arv configs/* build/configs/
-cp -arv secrets/* build/secrets/
+cp -av configs/* build/configs/
+cp -av secrets/* build/secrets/
 gomplate --input-dir=src --output-dir=build
 
 # Verify the configs work

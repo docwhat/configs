@@ -1,6 +1,60 @@
 version: '3.7'
 
-{{file.Read "include/x-common.yaml"}}
+### INCLUDE BEGIN
+
+
+x-twelve-factor-app:
+  read_only: true
+  logging:
+    options:
+      max-size: "200k"
+      max-file: "2"
+    driver: "json-file"
+  deploy:
+    labels:
+    - "swarmpit.service.deployment.autoredeploy=true"
+    restart_policy:
+      delay: "2s"
+    replicas: 2
+    rollback_config:
+      parallelism: 1
+      delay: "1s"
+    update_config:
+      parallelism: 1
+      delay: "10s"
+      failure_action: "rollback"
+    placement:
+      constraints:
+        - "node.role==worker"
+
+
+x-logging:
+  &default-logging
+  options:
+    max-size: "200k"
+    max-file: "2"
+  driver: "json-file"
+
+x-twelve-deploy:
+  &twelve-deploy
+  labels:
+  - "swarmpit.service.deployment.autoredeploy=true"
+  restart_policy:
+    delay: "2s"
+  replicas: 2
+  rollback_config:
+    parallelism: 1
+    delay: "1s"
+  update_config:
+    parallelism: 1
+    delay: "10s"
+    failure_action: "rollback"
+  placement:
+    constraints:
+      - "node.role==worker"
+
+
+### INCLUDE FINISH
 
 services:
   prod-blog:

@@ -33,8 +33,11 @@ x-twelve-deploy:
 
 services:
   mongodb:
-    image: "docker.io/mongo:4.0"
+    image: "docker.io/mongo:4"
     read_only: true
+    command:
+      - "--wiredTigerCacheSizeGB"
+      - "0.080"
     configs:
       - source: "db_config"
         target: "/docker-entrypoint-initdb.d/mongoconfig.js"

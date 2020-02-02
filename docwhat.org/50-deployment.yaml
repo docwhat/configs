@@ -1,0 +1,26 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: docwhat-blog-deployment
+  labels:
+    app: docwhat-blog
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: docwhat-blog
+  template:
+    metadata:
+      labels:
+        app: docwhat-blog
+    spec:
+      containers:
+        - name: docwhat-blog
+          image: docker.io/docwhat/docwhat:live
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 80
+          # resources:
+          #   limits:
+          #     memory: "32m"
+          #     cpu: "0.2"

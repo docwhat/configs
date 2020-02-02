@@ -1,6 +1,0 @@
-x-logging:
-  &default-logging
-  options:
-    max-size: "200k"
-    max-file: "2"
-  driver: "json-file"

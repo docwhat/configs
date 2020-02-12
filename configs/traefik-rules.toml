@@ -50,25 +50,3 @@ rule = "Host:docwhat.com,www.docwhat.com"
 regex = "^https?://(www\\.)?docwhat.com/(.*)"
 replacement = "https://docwhat.org/$2"
 permanent = true
-
-[frontends.docwhatinfo]
-backend = "fake"
-
-[frontends.docwhatinfo.routes.host]
-rule = "Host:docwhat.info,www.docwhat.info"
-
-[frontends.docwhatinfo.redirect]
-regex = "^https?://(www\\.)?docwhat.info/(.*)"
-replacement = "https://docwhat.org/$1"
-permanent = true
-
-[frontends.docwhatme]
-backend = "fake"
-
-[frontends.docwhatme.routes.host]
-rule = "Host:docwhat.me,www.docwhat.me"
-
-[frontends.docwhatme.redirect]
-regex = "^https?://(www\\.)?docwhat.me/(.*)"
-replacement = "https://docwhat.org/$1"
-permanent = true

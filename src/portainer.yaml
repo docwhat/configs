@@ -56,7 +56,7 @@ services:
           - "node.platform.os == linux"
 
   portainer:
-    image: "docker.io/portainer/portainer:1.23.0"
+    image: "docker.io/portainer/portainer:1.23.2"
     command:
       - "--host=tcp://tasks.portainer-agent:9001"
       - "--tlsskipverify"

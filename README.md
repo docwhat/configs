@@ -1,5 +1,6 @@
 # Configs
 
-My docker swarm configurations.
+> My docker swarm configurations.
 
-The secrets are store someplace else.
+**NO LONGER USED** See <https://github.com/holtje/hive-config> for my kubernetes configuration.
+
